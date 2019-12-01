@@ -25,42 +25,116 @@
  * 
  * 示例:
  * 
- * LRUCache cache = new LRUCache( 2 /* 缓存容量 */ );
- * 
- * cache.put(1, 1);
- * cache.put(2, 2);
- * cache.get(1);       // 返回  1
- * cache.put(3, 3);    // 该操作会使得密钥 2 作废
- * cache.get(2);       // 返回 -1 (未找到)
- * cache.put(4, 4);    // 该操作会使得密钥 1 作废
- * cache.get(1);       // 返回 -1 (未找到)
- * cache.get(3);       // 返回  3
- * cache.get(4);       // 返回  4
- * 
- * 
- */
+ * LRUCache cache = new LRUCache( 2 /* 缓存容量 */ );**cache.put(1,1);*cache.put(2,2);*cache.get(1); // 返回  1
+*cache.put(3,3); // 该操作会使得密钥 2 作废
+*cache.get(2); // 返回 -1 (未找到)
+*cache.put(4,4); // 该操作会使得密钥 1 作废
+*cache.get(1); // 返回 -1 (未找到)
+*cache.get(3); // 返回  3
+*cache.get(4); // 返回  4
+***/
 
 // @lc code=start
+import java.util.Hashtable;
+
 class LRUCache {
 
-    public LRUCache(int capacity) {
-        
+  class DLinkedNode {
+    int key;
+    int value;
+    DLinkedNode pre;
+    DLinkedNode post;
+  }
+
+  private void addNode(DLinkedNode node) {
+
+    node.pre = head;
+    node.post = head.post;
+
+    head.post.pre = node;
+    head.post = node;
+  }
+
+  private void removeNode(DLinkedNode node) {
+    DLinkedNode pre = node.pre;
+    DLinkedNode post = node.post;
+
+    pre.post = post;
+    post.pre = pre;
+  }
+
+  private void moveToHead(DLinkedNode node) {
+    this.removeNode(node);
+    this.addNode(node);
+  }
+
+  private DLinkedNode popTail() {
+    DLinkedNode res = tail.pre;
+    this.removeNode(res);
+    return res;
+  }
+
+  private Hashtable<Integer, DLinkedNode> cache = new Hashtable<Integer, DLinkedNode>();
+  private int count;
+  private int capacity;
+  private DLinkedNode head, tail;
+
+  public LRUCache(int capacity) {
+    this.count = 0;
+    this.capacity = capacity;
+
+    head = new DLinkedNode();
+    head.pre = null;
+
+    tail = new DLinkedNode();
+    tail.post = null;
+
+    head.post = tail;
+    tail.pre = head;
+  }
+
+  public int get(int key) {
+    DLinkedNode node = cache.get(key);
+    if (node == null) {
+      return -1;
     }
-    
-    public int get(int key) {
-        
+
+    // 提升最近使用的key至head
+    this.moveToHead(node);
+
+    return node.value;
+  }
+
+  public void put(int key, int value) {
+    DLinkedNode node = cache.get(key);
+
+    if (node == null) {
+
+      DLinkedNode newNode = new DLinkedNode();
+      newNode.key = key;
+      newNode.value = value;
+
+      this.cache.put(key, newNode);
+      this.addNode(newNode);
+
+      ++count;
+
+      if (count > capacity) {
+        // pop
+        DLinkedNode tail = this.popTail();
+        this.cache.remove(tail.key);
+        --count;
+      }
+    } else {
+      // 更新值
+      node.value = value;
+      this.moveToHead(node);
     }
-    
-    public void put(int key, int value) {
-        
-    }
+  }
 }
 
 /**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
+ * Your LRUCache object will be instantiated and called as such: LRUCache obj =
+ * new LRUCache(capacity); int param_1 = obj.get(key); obj.put(key,value);
  */
 // @lc code=end
-
