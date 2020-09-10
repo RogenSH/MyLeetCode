@@ -42,8 +42,48 @@
 // @lc code=start
 class Solution {
     public int climbStairs(int n) {
-        
+        // return solution1(n);
+        // return solution2(n);
+        return solution3(n);
+        // return solution4(n);
     }
+
+    // 递归，超时
+    public int solution1(int n) {
+        if (n == 0 || n == 1 || n == 2) return n;
+        return solution1(n - 1) + solution1(n - 2);
+    }
+
+    // 动态规划1
+    public int solution2(int n) {
+        // 注意数组长度为 n + 2
+        int[] dp = new int[n + 2];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 2] + dp[i - 1];
+        }
+        return dp[n];
+    }
+
+    // 动态规划2 优化空间
+    public int solution3(int n) {
+        int x = 0, y = 0, z = 1;
+        for (int i = 1; i <= n; i++) {
+            x = y;
+            y = z;
+            z = x + y;
+        }
+        return z;
+    }
+
+    // 斐波那契数列 计算公式（可通过特征方程推导）
+    public int solution4(int n) {
+        double sqrt5 = Math.sqrt(5);
+        double fibn = Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1);
+        return (int)(fibn / sqrt5);
+    }
+
 }
 // @lc code=end
 
