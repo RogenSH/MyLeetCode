@@ -40,7 +40,24 @@ class Solution {
         // 双指针 
         // return func2(height);
         // 优化双指针
-        return func3(height);
+        // return func3(height);
+
+        return test(height);
+    }
+
+    public int test(int[] height) {
+        int i = 0, j = height.length - 1, content = 0;
+        while (i < j) {
+            int leftHeight = height[i];
+            int rightHeight = height[j];
+            content = Math.max(content, Math.min(leftHeight, rightHeight) * (j - i));
+            if (leftHeight <= rightHeight) {
+                while (i < j && height[i] <= leftHeight) ++i;
+            } else {
+                while (i < j && height[j] <= rightHeight) --j;
+            }
+        }
+        return content;
     }
 
     public int func3(int[] height) {
