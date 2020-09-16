@@ -31,8 +31,29 @@
 
 // @lc code=start
 class Solution {
+    public void moveZeroes(int[] nums) {
+        solution1(nums);
+        // solution2(nums);
+    }
+
+    // 补零
+    public void solution1(int[] nums) {
+        // i:插入位置下标 ; j:查找位置下标
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[j] != 0) {
+                nums[i] = nums[j];
+                i++;
+            }
+        }
+        // 将后面的位置补0
+        for (int p = i; p < nums.length; p++) {
+            nums[p] = 0;
+        }
+    }
+
     // 交换顺序
-    public void moveZeroes1(int[] nums) {
+    public void solution2(int[] nums) {
         if (nums == null || nums.length < 2)
             return;
         int i = 0, j = 0;
@@ -47,20 +68,5 @@ class Solution {
         }
     }
 
-    // 补零
-    public void moveZeroes(int[] nums) {
-        // i:插入位置下标 ; j:查找位置下标
-        int i = 0;
-        for (int j = 0; j < nums.length; j++) {
-            if (nums[j] != 0) {
-                nums[i] = nums[j];
-                i++;
-            }
-        }
-        // 将后面的位置补0
-        for (int p = i; p < nums.length; p++) {
-            nums[p] = 0;
-        }
-    }
 }
 // @lc code=end

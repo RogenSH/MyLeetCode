@@ -40,8 +40,68 @@ class Solution {
         if (head == null || head.next == null) return head;
 
         // return func1(head);
+        // return func2(head);
+        // return solution1(head);
+        // return solution2(head);
+        return solution3(head);
+    }
 
-        return func2(head);
+    public ListNode solution1(ListNode head) {
+        ListNode firstNode = new ListNode(-1);
+        firstNode.next = head;
+
+        ListNode preNode = firstNode;
+        while (preNode.next != null && preNode.next.next != null) {
+            ListNode foreNode = preNode.next;
+            ListNode temp = foreNode.next.next;
+            preNode.next = foreNode.next;
+            foreNode.next.next = foreNode;
+            foreNode.next = temp;
+            preNode = foreNode;
+        }
+        return firstNode.next;
+    }
+
+    public ListNode solution2(ListNode head) {
+        ListNode firstNode = new ListNode(-1);
+        firstNode.next = head;
+        ListNode preNode = firstNode;
+        Stack<ListNode> stack = new Stack<>();
+        while (preNode.next != null && preNode.next.next != null) {
+            ListNode temp = preNode.next.next.next;
+            stack.add(preNode.next);
+            stack.add(preNode.next.next);
+            preNode.next = stack.pop();
+            preNode.next.next = stack.pop();
+            preNode.next.next.next = temp;
+            preNode = preNode.next.next;
+
+        }
+        return firstNode.next;
+    }
+
+    public ListNode solution3(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode temp = head.next;
+        ListNode node = solution3(temp.next);
+        head.next = node;
+        temp.next = head;
+        return temp;
+    }
+
+    public ListNode swapPairs1(ListNode head) {
+        if (head == null || head.next == null) return head;
+        //第一个节点
+        ListNode first = head;
+        //第二个节点
+        ListNode second = head.next;
+        //保存记录第二个节点后的节点引用
+        ListNode next = second.next;
+        //第二个节点指向第一个节点
+        second.next = first;
+        //第二个节点指向第一个节点，第一个节点指向(原第二个节点的下一个节点)
+        first.next = swapPairs1(next);
+        return second;
     }
 
     //todo: 栈: 空间O(1)，时间O(n) 

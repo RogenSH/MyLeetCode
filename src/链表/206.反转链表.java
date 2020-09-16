@@ -1,3 +1,5 @@
+import java.util.List;
+
 /*
  * @lc app=leetcode.cn id=206 lang=java
  *
@@ -15,23 +17,38 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-       if (head == null || head.next == null) return head;
-       
-    //    return func1(head);
+    //    return solution1(head);
+       return solution2(head);
+    }
 
-       return func2(head);
+    public ListNode test1(ListNode head) {
+        ListNode pre = null;
+        ListNode current = head;
+        while (current != null) {
+            ListNode next = current.next;
+            current.next = pre;
+            pre = current;
+            current = next;
+        }
+        return pre;
+    }
+
+    public ListNode test2(ListNode head) {
+        if (head == null) return head;
+        ListNode node = test2(head.next);
     }
 
     // 递归!!!
-    public ListNode func1(ListNode head) {
-        ListNode p = func1(head.next);
+    public ListNode solution1(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode p = solution1(head.next);
         head.next.next = head;
         head.next = null;
         return p;
     }
 
     // 迭代
-    public ListNode func2(ListNode head) {
+    public ListNode solution2(ListNode head) {
         ListNode pre = null;
         ListNode curr = head;
         while (curr != null) {
@@ -42,6 +59,7 @@ class Solution {
         }
         return pre;
     }
+
 }
 // @lc code=end
 
