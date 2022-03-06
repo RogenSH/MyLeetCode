@@ -6,5 +6,6 @@
     "**/.settings": true,
     "**/.factorypath": true
   },
+  "problems.decorations.enabled": false,
   // "java.home": "/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk"
 }
