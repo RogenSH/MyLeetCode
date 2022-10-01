@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d44fb4c2-6d81-4d7a-8e0b-06f9cd8ecf62" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/leetcode/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/300.最长上升子序列.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +82,7 @@
       <workItem from="1570465750262" duration="199000" />
       <workItem from="1599114686340" duration="31000" />
       <workItem from="1632655770844" duration="375000" />
-      <workItem from="1646542363176" duration="328000" />
+      <workItem from="1646542363176" duration="571000" />
     </task>
     <servers />
   </component>
